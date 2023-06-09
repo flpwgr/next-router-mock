@@ -27,6 +27,20 @@ describe("withRouter", () => {
     expect(screen.getByText('Current path: "/test"')).toBeDefined();
   });
 
+  it("should have access to the current router with hash", async () => {
+    render(<TestComponentWrapper />);
+    expect(screen.getByText('Current path: "/test"')).toBeDefined();
+
+    act(() => {
+      memoryRouter.push({
+        hash: "#narf",
+      });
+    });
+
+    expect(memoryRouter.asPath).toBe("/test#narf");
+    expect(screen.getByText('Current path: "/test#narf"')).toBeDefined();
+  });
+
   it("should respond to updates", () => {
     render(<TestComponentWrapper />);
     act(() => {
